@@ -1,0 +1,15 @@
+{
+    "name": "styled-components-px2rem",
+    "version": "0.1.0",
+    "description": "",
+    "author": "",
+    "license": "ISC",
+    "keywords": ["swc-plugin"],
+    "main": "target/wasm32-wasi/release/styled_components_px2rem.wasm",
+    "scripts": {
+        "prepack": "cargo prepublish --release && cp target/wasm32-wasi/release/styled_components_px2rem.wasm .",
+        "prepublishOnly": "cargo build-wasi --release"
+    },
+    "files": [],
+    "preferUnplugged": true
+}
