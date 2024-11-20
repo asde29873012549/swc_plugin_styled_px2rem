@@ -1,0 +1,17 @@
+[package]
+name = "styled_components_px2rem"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "styled_components_px2rem"
+
+[dependencies]
+serde = "1"
+swc_core = { version = "5.0.*", features = ["ecma_plugin_transform"] }
+regex = "1"
+lazy_static = "1"
+
+[dev-dependencies]
+swc_core = { version = "5.0.*", features = ["testing"] }
+testing = "4.0.0"
