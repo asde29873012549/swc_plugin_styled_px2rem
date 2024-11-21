@@ -2,5 +2,4 @@
 ^target/
 target
 .DS_Store
-.cargo/config
-tests/__swc_snapshots__
+.cargo/config.toml

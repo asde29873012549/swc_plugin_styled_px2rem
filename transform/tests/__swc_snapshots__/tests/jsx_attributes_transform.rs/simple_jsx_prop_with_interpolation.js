@@ -1,1 +1,1 @@
-<div width={`${px2rem(size)}`}/>;
+<div $width={`${px2rem(size)}`}/>;

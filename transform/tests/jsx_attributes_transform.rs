@@ -34,7 +34,7 @@ mod jsx_attribute_transforms {
         },
         simple_jsx_prop_with_interpolation,
         r#"
-        <div width={`${size}px`} />
+        <div $width={`${size}px`} />
         "#
     );
 
