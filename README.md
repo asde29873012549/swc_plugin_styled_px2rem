@@ -119,13 +119,13 @@ const Avatar = ({ className, margin }) => (
 
 export default styled(Avatar)`
   padding: 32px;
-  margin: ${props => props.margin}px;
+  margin: ${props => props.$margin}px;
 `
 
 
 // After
 const Avatar = ({ className }) => (
-    <div className={className} style={{ width: "27.778rem" }} />
+    <div className={className} style={{ width: "27.7rem" }} />
 )
 
 export default styled(Avatar)`
