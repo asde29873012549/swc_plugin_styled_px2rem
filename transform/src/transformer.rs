@@ -6,7 +6,7 @@ use swc_core::ecma::{
 use crate::{
     config::Config,
     visitor::PxToRem,
-    helpers::{ is_styled_components, transform_css, wrap_with_px2rem },
+    helpers::{ is_styled_components, is_styled_function, transform_css, wrap_with_px2rem },
 };
 
 struct TemplateVisitor<'a> {
@@ -93,21 +93,17 @@ impl VisitMut for PxToRem {
     }
 
     // Handle CallExpression form of styled-components eg: styled.div(`...`)
-    // fn visit_mut_call_expr(&mut self, n: &mut CallExpr) {
-    //     // First visit children
-    //     n.visit_mut_children_with(self);
+    fn visit_mut_call_expr(&mut self, n: &mut CallExpr) {
+        if !is_styled_function(n) {
+            return;
+        }
 
-    //     // Check if it's a styled-components call
-    //     if !is_styled_call(n) {
-    //         return;
-    //     }
-
-    //     // Process the arguments if they contain template literals
-    //     for arg in n.args.iter_mut() {
-    //         let mut visitor = self.create_template_visitor();
-    //         arg.expr.visit_mut_with(&mut visitor);
-    //     }
-    // }
+        // Process the arguments if they contain template literals
+        for arg in n.args.iter_mut() {
+            let mut visitor = self.create_template_visitor();
+            arg.expr.visit_mut_with(&mut visitor);
+        }
+    }
 
     // Handle JSXAttribute form of styled-components eg: <div styled={{ padding: '10px' }} />
     fn visit_mut_jsx_attr(&mut self, n: &mut JSXAttr) {
