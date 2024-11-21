@@ -1335,7 +1335,10 @@ dependencies = [
  "lazy_static",
  "regex",
  "serde",
+ "serde_json",
  "swc_core",
+ "swc_ecma_parser",
+ "testing",
 ]
 
 [[package]]
@@ -1414,6 +1417,7 @@ dependencies = [
  "swc_plugin",
  "swc_plugin_macro",
  "swc_plugin_proxy",
+ "testing",
  "vergen",
 ]
 
@@ -1654,6 +1658,13 @@ dependencies = [
  "swc_ecma_ast",
  "swc_trace_macro",
  "tracing",
+]
+
+[[package]]
+name = "swc_plugin_styled_px2rem"
+version = "0.1.0"
+dependencies = [
+ "styled_components_px2rem",
 ]
 
 [[package]]

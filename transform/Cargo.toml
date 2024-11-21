@@ -7,11 +7,13 @@ edition = "2021"
 name = "styled_components_px2rem"
 
 [dependencies]
-serde = "1"
-swc_core = { version = "5.0.*", features = ["ecma_plugin_transform"] }
-regex = "1"
-lazy_static = "1"
+serde_json = { workspace = true }
+regex = { workspace = true }
+lazy_static = { workspace = true }
+serde = { workspace = true, features = ["derive"] }
+swc_core = { workspace = true, features = ["ecma_plugin_transform"] }
 
 [dev-dependencies]
-swc_core = { version = "5.0.*", features = ["testing"] }
-testing = "4.0.0"
+swc_core = { workspace = true, features = ["testing"] }
+swc_ecma_parser = { workspace = true }
+testing = { workspace = true }

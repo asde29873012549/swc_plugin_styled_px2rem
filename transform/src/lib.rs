@@ -7,23 +7,29 @@ use swc_core::ecma::{
     visit::VisitMutWith,
 };
 use swc_core::common::{DUMMY_SP, SyntaxContext};
+use serde_json;
 
 pub mod config;
 pub mod visitor;
 pub mod transformer;
 pub mod helpers;
 pub mod regex;
+pub mod px2rem_fn;
 
 use config::Config;
 use visitor::PxToRem;
-use helpers::create_px2rem_function;
+use px2rem_fn::create_px2rem_function;
 
 #[plugin_transform]
 pub fn styled_components_px2rem(
     mut program: Program,
-    _metadata: TransformPluginProgramMetadata,
+    metadata: TransformPluginProgramMetadata,
 ) -> Program {
-    let config = Config::default();
+    let config = metadata
+        .get_transform_plugin_config()
+        .and_then(|json_str| serde_json::from_str::<Config>(&json_str).ok())
+        .unwrap_or_default();
+
     let mut visitor = PxToRem::new(config);
     program.visit_mut_with(&mut visitor);
 
@@ -32,7 +38,8 @@ pub fn styled_components_px2rem(
         let px2rem_function = create_px2rem_function(&visitor.config);
 
         if let Program::Module(module) = &mut program {
-            module.body.push(ModuleItem::Stmt(Stmt::Decl(Decl::Var(Box::new(
+            // Insert at the beginning of the module
+            module.body.insert(0, ModuleItem::Stmt(Stmt::Decl(Decl::Var(Box::new(
                 VarDecl {
                     span: DUMMY_SP,
                     kind: VarDeclKind::Var,
