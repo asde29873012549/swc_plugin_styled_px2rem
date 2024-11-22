@@ -44,7 +44,14 @@ pub fn is_styled_components(tagged_tpl: &TaggedTpl) -> bool {
     }
 }
 
-
+// check if either the following:
+// - identifier
+// - call expression
+// - binary expression
+// - string literal
+// - number literal
+// - member expression
+// - optional chaining
 pub fn is_pure_expression(expr: &Expr) -> bool {
     match expr {
         Expr::Ident(_) |
@@ -72,7 +79,7 @@ pub fn transform_css(css: &str, config: &Config) -> String {
         let rem_value = (px_value * config.multiplier) / root_font_size;
 
         if rem_value.fract() == 0.0 {
-            // If it's a whole number, don't show decimal places
+            // If it's a integer, don't show decimal places
             format!("{}rem", rem_value as i64)
         } else {
             let formatted =
@@ -88,6 +95,7 @@ pub fn transform_css(css: &str, config: &Config) -> String {
     result.to_string()
 }
 
+// create px2rem call expression
 fn create_px2rem_call(expr: Box<Expr>, args_expr: Option<Box<Expr>>) -> Expr {
     let mut args = vec![ExprOrSpread {
         spread: None,
@@ -112,6 +120,7 @@ fn create_px2rem_call(expr: Box<Expr>, args_expr: Option<Box<Expr>>) -> Expr {
     })
 }
 
+// wrap expression with px2rem call expression
 pub fn wrap_with_px2rem(expr: &mut Expr, px2rem_used: &mut bool) -> Box<Expr> {
     *px2rem_used = true;
     match expr {

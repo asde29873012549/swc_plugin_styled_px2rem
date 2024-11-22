@@ -25,6 +25,7 @@ pub fn styled_components_px2rem(
     mut program: Program,
     metadata: TransformPluginProgramMetadata,
 ) -> Program {
+    // get config specified in the next.config.js
     let config = metadata
         .get_transform_plugin_config()
         .and_then(|json_str| serde_json::from_str::<Config>(&json_str).ok())
@@ -34,11 +35,11 @@ pub fn styled_components_px2rem(
     program.visit_mut_with(&mut visitor);
 
     if visitor.px2rem_used {
-        // Inject px2rem function into the program
+        // create px2rem function
         let px2rem_function = create_px2rem_function(&visitor.config);
 
         if let Program::Module(module) = &mut program {
-            // Insert at the beginning of the module
+            // Inject px2rem function at the beginning of the module
             module.body.insert(0, ModuleItem::Stmt(Stmt::Decl(Decl::Var(Box::new(
                 VarDecl {
                     span: DUMMY_SP,

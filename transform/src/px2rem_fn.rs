@@ -3,6 +3,11 @@ use swc_core::common::{DUMMY_SP, SyntaxContext};
 
 use crate::config::Config;
 
+
+// creation of px2rem function using AST
+// created function:
+// var px2rem = (value) => "".concat((parseFloat(value) / {root_value} * {multiplier}).toFixed({unit_precision}), "rem");
+
 pub fn create_px2rem_function(config: &Config) -> Expr {
     // Create parameter: (value)
     let param = Pat::Ident(BindingIdent {

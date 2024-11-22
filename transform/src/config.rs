@@ -38,9 +38,13 @@ fn default_tags() -> Vec<String> {
 impl Default for Config {
     fn default() -> Self {
         Self {
+            // default: 3.75
             root_value: default_root_value(),
+            // default: 3
             unit_precision: default_unit_precision(),
+            // default: 0
             min_pixel_value: default_min_pixel_value(),
+            // default: 1
             multiplier: default_multiplier(),
 
             tags: default_tags(),
