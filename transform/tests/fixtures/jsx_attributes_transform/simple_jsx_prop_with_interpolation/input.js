@@ -1,0 +1,1 @@
+<div $width={`${size}px`} />
